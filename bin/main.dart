@@ -18,6 +18,37 @@
 //  Example
 /// Input : 49927398716
 /// Output: 49927398716 passes the test
+bool cardValidator(String card) {
+  List<int> cardNumber =
+      card.split('').map((element) => int.parse(element)).toList();
+  cardNumber = cardNumber.reversed.toList();
+
+  List<int> sums = gets1Ands2(cardNumber);
+  return sums.reduce((a, b) => a + b) % 10 == 0;
+}
+
+List<int> gets1Ands2(List<int> numbers) {
+  int s1 = 0;
+  int s2 = 0;
+  for (int i = 0; i < numbers.length; i++) {
+    if (i % 2 != 0) {
+      s2 += validEvenPlaceOutput(numbers[i]);
+    } else {
+      s1 += numbers[i];
+    }
+  }
+  print('$s2 $s1');
+  return [s1, s2];
+}
+
+int validEvenPlaceOutput(int number) => number * 2 > 9
+    ? (number * 2)
+        .toString()
+        .split('')
+        .map((element) => int.parse(element))
+        .reduce((a, b) => a + b)
+    : number * 2;
 
 main() {
+  print(cardValidator('49927398716'));
 }
